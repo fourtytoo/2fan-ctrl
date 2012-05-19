@@ -40,7 +40,14 @@ Boston, MA 02111-1307, USA.*/
 #define MINIMUM_ON 50		// x * GRANULARITY
 #define SPINUP 10		// x * GRANULARITY
 
-#define MIN_TEMP 300
+//  You don't want to start the fans below this temperature.  This is
+//  actually a voltage measured on NTC_PIN.  The value is between 0
+//  and 1023, the latter being Vcc.  So, if Vcc is around 5V, here 300
+//  means something about 1.46V.  This is what you would read at about
+//  22-25 degrees centigrade.
+#ifndef MIN_TEMP
+# define MIN_TEMP 300
+#endif
 
 #define HIGH 1
 #define LOW 0
@@ -49,8 +56,13 @@ Boston, MA 02111-1307, USA.*/
 #define INPUT 1
 #define OUTPUT 0
 
-// most motors don't even start below half their rated voltage
-#define MINIMUM_SPEED ((FULL_SPEED) * 7 / 10)
+// Most motors don't even start below half their rated voltage.  Here
+// we use a conservative 70%, but you should check your fans data
+// sheet or do some experiments.
+#ifndef MINIMUM_DUTY_CYCLE
+# define MINIMUM_DUTY_CYCLE	7/10
+#endif
+#define MINIMUM_SPEED ((FULL_SPEED) * MINIMUM_DUTY_CYCLE)
 
 
 
