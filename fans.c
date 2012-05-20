@@ -56,9 +56,10 @@ Boston, MA 02111-1307, USA.*/
 #define INPUT 1
 #define OUTPUT 0
 
-// Most motors don't even start below half their rated voltage.  Here
-// we use a conservative 70%, but you should check your fans data
-// sheet or do some experiments.
+// The PWM duty cycle will tell the voltage applied to a fan and thus
+// its speed.  Most motors don't even budge below half their rated
+// voltage.  Here we use a conservative 70%, but you should check your
+// fans data sheet or do some experiments.
 #ifndef MINIMUM_DUTY_CYCLE
 # define MINIMUM_DUTY_CYCLE	7/10
 #endif
@@ -66,15 +67,12 @@ Boston, MA 02111-1307, USA.*/
 
 
 
-#define getPortBits(port,mask) (*(&(port) - 2) & (mask))
-#define getPortBit(port,bit) getPortBits((port), _BV(mask))
-#define setPortBits(port,mask,bits) ((port) = ((port) & ~(mask)) | ((bits) & (mask)))
-#define setPortBit(port,bit,value) setPortBits((port), _BV(bit), (((value) == HIGH) ? _BV(bit) : 0))
-#define setPortBitsDirection(port,mask,direction) setPortBits(*(&(port) - 1), (mask), (((direction) == OUTPUT) ? (mask) : 0))
+#define setRegisterBits(reg,mask,bits) ((reg) = ((reg) & ~(mask)) | ((bits) & (mask)))
+#define setPortBitsDirection(port,mask,direction) setRegisterBits(*(&(port) - 1), (mask), (((direction) == OUTPUT) ? (mask) : 0))
 #define setPortBitDirection(port,bit,direction) setPortBitsDirection((port), _BV(bit), (direction))
-// just like setPortBit/getPortBit -wcp1/4/12.
-#define setRegisterBit(reg, bit, on) ((reg) = ((reg) & ~_BV(bit)) | ((on) ? _BV(bit) : 0))
+#define setRegisterBit(reg, bit, on) setRegisterBits((reg), _BV(bit), ((on) ? _BV(bit) : 0))
 #define getRegisterBit(reg, bit) ((reg) & _BV(bit))
+
 
 static void
 delay_ms (int time)
@@ -82,15 +80,6 @@ delay_ms (int time)
   for (; time > 0; --time)
     _delay_ms(1);
 }
-
-#if 0				// not used yet -wcp28/3/12.
-static void
-delay_us (int time)
-{
-  for (; time > 0; --time)
-    _delay_us(1);
-}
-#endif
 
 static void
 delay_s (int time)
