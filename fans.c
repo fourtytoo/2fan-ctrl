@@ -2,7 +2,7 @@
 
 /*  main.c --- main program
 
- Copyright (C) 2009 by Walter C. Pelissero
+ Copyright (C) 2012 by Walter C. Pelissero
 
  Author: Walter C. Pelissero <walter@pelissero.de>
  Project: PC fan control
@@ -28,7 +28,7 @@ Boston, MA 02111-1307, USA.*/
 // its speed.  Most motors don't even budge below half their rated
 // voltage.  Here we use a conservative 70%, but you should check your
 // fans data sheet or do some experiments.  If you find yourself using
-// to high values here, it may mean that the fans you are trying to
+// too high values here, it may mean that the fans you are trying to
 // employ don't like to have their speed modulated at all; choose
 // another type.
 #ifndef MINIMUM_DUTY_CYCLE
@@ -49,7 +49,7 @@ Boston, MA 02111-1307, USA.*/
 # define TRAIL_ON 50		// x * GRANULARITY
 #endif
 
-// How long to run the fan at maximum speed on start, so that it will
+// How long to run the fan at full voltage on start, so that it will
 // gain momentum.  This is proportional to the GRANULARITY (above).
 #ifndef SPINUP
 # define SPINUP 10		// x * GRANULARITY
@@ -65,8 +65,8 @@ Boston, MA 02111-1307, USA.*/
 #endif
 
 // Temperature variations are damped by this factor. The bigger the
-// slower the fan speed variations.  A value of 1 gets away with any
-// kind of damping.
+// slower the fan speed variations.  A value of 1 gets rid of the
+// damping.
 #ifndef DAMP_FACTOR
 # define DAMP_FACTOR 10
 #endif
