@@ -164,16 +164,16 @@ static void
 test_fans ()
 {
   setFANspeed(FAN1_PIN, FULL_SPEED);
-  delay_s(2);
+  delay_s(3);
   setFANspeed(FAN1_PIN, STOP);
   delay_ms(50);
   setFANspeed(FAN2_PIN, FULL_SPEED);
-  delay_s(2);
+  delay_s(3);
   setFANspeed(FAN2_PIN, STOP);
-  delay_s(4);
+  delay_s(5);
   setFANspeed(FAN1_PIN, FULL_SPEED);
   setFANspeed(FAN2_PIN, FULL_SPEED);
-  delay_s(2);
+  delay_s(3);
   setFANspeed(FAN1_PIN, STOP);
   setFANspeed(FAN2_PIN, STOP);
 }
