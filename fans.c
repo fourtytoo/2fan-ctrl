@@ -75,11 +75,11 @@ Boston, MA 02111-1307, USA.*/
 
 // How quickly the fan speed should ramp up with the increase of
 // temperature. 100 means 1:1 (linearly).  That is, the fan speed is
-// proportional to temperature.  Anything below 100 doesn't make much
-// sense.  Values above 100 will try to compensate the temperature
-// more aggressively.
+// proportional to temperature.  Values above 100 will try to
+// compensate the temperature more aggressively.  Anything below 100
+// doesn't make much sense.
 #ifndef SPEED_GAIN
-# define SPEED_GAIN 100
+# define SPEED_GAIN 110
 #endif
 
 // end of tuning knobs
