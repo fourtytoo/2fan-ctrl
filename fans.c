@@ -52,7 +52,7 @@ Boston, MA 02111-1307, USA.*/
 // How long to run the fan at full voltage on start, so that it will
 // gain momentum.  This is proportional to the GRANULARITY (above).
 #ifndef SPINUP
-# define SPINUP 10		// x * GRANULARITY
+# define SPINUP 15		// x * GRANULARITY
 #endif
 
 //  You don't want to start the fans below this temperature.  This is
