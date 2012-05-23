@@ -66,11 +66,12 @@ Boston, MA 02111-1307, USA.*/
 # define MIN_TEMP 300
 #endif
 
-// Temperature variations are damped by this factor. The bigger the
-// slower the fan speed changes.  A value of 1 gets rid of the
-// damping.
-#ifndef DAMP_FACTOR
-# define DAMP_FACTOR 10
+// A cumulative moving average is applied to the temperature readings,
+// thus damping the value and causing less variations to the fans
+// speed.  The bigger the window, the smoother (and slower) the
+// transitions.  A value of 1 gets rid of the damping altogether.
+#ifndef CMA_WINDOW
+# define CMA_WINDOW 20
 #endif
 
 // end of tuning knobs
@@ -336,7 +337,7 @@ loop ()
       // Damp the temperature value averaging it with the old one.
       // The more weight on the old one the less dynamic the
       // variations.
-      temp = (((DAMP_FACTOR - 1) * old_temp) + temp) / DAMP_FACTOR;
+      temp = (((CMA_WINDOW - 1) * old_temp) + temp) / CMA_WINDOW;
       old_temp = temp;
       // Reduce the temperature offset, because we are not interested
       // in temperatures below MIN_TEMP.
