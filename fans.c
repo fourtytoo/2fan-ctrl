@@ -35,7 +35,9 @@ Boston, MA 02111-1307, USA.*/
 # define MINIMUM_DUTY_CYCLE	7/10
 #endif
 
-// How often the main loop is run.  Every 0.1s should be alright.
+// How often the main loop is run.  Every 1/10th of a second should be
+// alright.  Remember that if you change this, the values that are
+// proportional to it will have a different meaning in real terms.
 #ifndef GRANULARITY
 # define GRANULARITY 100		// in ms
 #endif
@@ -65,7 +67,7 @@ Boston, MA 02111-1307, USA.*/
 #endif
 
 // Temperature variations are damped by this factor. The bigger the
-// slower the fan speed variations.  A value of 1 gets rid of the
+// slower the fan speed changes.  A value of 1 gets rid of the
 // damping.
 #ifndef DAMP_FACTOR
 # define DAMP_FACTOR 10
