@@ -71,6 +71,15 @@ Boston, MA 02111-1307, USA.*/
 # define DAMP_FACTOR 10
 #endif
 
+// How quickly the fan speed should ramp up with the increase of
+// temperature. 100 means 1:1 (linearly).  That is, the fan speed is
+// proportional to temperature.  Anything below 100 doesn't make much
+// sense.  Values above 100 will try to compensate the temperature
+// more aggressively.
+#ifndef SPEED_GAIN
+# define SPEED_GAIN 100
+#endif
+
 // end of tuning knobs
 //////////////////////////////////////////////////////////////////////
 
@@ -343,7 +352,7 @@ loop ()
       // much value range.
       min >>= 1;
       range >>= 1;
-      fan1_speed = (temp > min ? ((temp - min) * 100 / range) : 0);
+      fan1_speed = (temp > min ? ((temp - min) * SPEED_GAIN / range) : 0);
       if (fan1_speed > 100)
 	{
 	  fan2_speed = fan1_speed - 100;
