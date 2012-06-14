@@ -23,18 +23,6 @@ Boston, MA 02111-1307, USA.*/
 #include <util/delay.h>
 #include <avr/io.h>
 
-
-// The PWM duty cycle will tell the voltage applied to a fan and thus
-// its speed.  Most motors don't even budge below half their rated
-// voltage.  Here we use a conservative 70%, but you should check your
-// fans data sheet or do some experiments.  If you find yourself using
-// too high values here, it may mean that the fans you are trying to
-// employ don't like to have their speed modulated at all; choose
-// another type.
-#ifndef MINIMUM_DUTY_CYCLE
-# define MINIMUM_DUTY_CYCLE	7/10
-#endif
-
 // How often the main loop is run.  Every 1/10th of a second should be
 // alright.  Remember that if you change this, the values that are
 // proportional to it will have a different meaning in real terms.
@@ -71,8 +59,22 @@ Boston, MA 02111-1307, USA.*/
 // speed.  The bigger the window, the smoother (and slower) the
 // transitions.  A value of 1 gets rid of the damping altogether.
 #ifndef CMA_WINDOW
-# define CMA_WINDOW 20
+# define CMA_WINDOW 50
 #endif
+
+// The PWM duty cycle will tell the voltage applied to a fan and thus
+// its speed.  Most motors don't even budge around half their rated
+// voltage.  You should check your fans data sheet or do some
+// experiments.  If you find yourself using too high values here, it
+// may mean that the fans you are trying to employ don't like to have
+// their speed modulated at all; choose another type.
+#ifndef FAN1_MIN_DC
+# define FAN1_MIN_DC 70		// 70% minimum duty cycle
+#endif
+#ifndef FAN2_MIN_DC
+# define FAN2_MIN_DC 70		// 70% minimum duty cycle
+#endif
+
 
 // end of tuning knobs
 //////////////////////////////////////////////////////////////////////
@@ -99,7 +101,6 @@ Boston, MA 02111-1307, USA.*/
 #define LOW 0
 #define FULL_SPEED 255
 #define STOP 0
-#define MINIMUM_SPEED ((FULL_SPEED) * MINIMUM_DUTY_CYCLE)
 #define INPUT 1
 #define OUTPUT 0
 
@@ -249,11 +250,7 @@ init ()
   // enable a2d conversions
   setRegisterBit(ADCSRA, ADEN, 1);
 
-  setPortBitDirection(PORTB, FAN1_PIN, OUTPUT);
-  setPortBitDirection(PORTB, FAN2_PIN, OUTPUT);
   init_PWM();
-  setFANspeed(FAN1_PIN, STOP);
-  setFANspeed(FAN2_PIN, STOP);
   setPortBitDirection(PORTB, NTC_PIN, INPUT);
   setPortBitDirection(PORTB, POT1_PIN, INPUT);
   setPortBitDirection(PORTB, POT2_PIN, INPUT);
@@ -262,7 +259,7 @@ init ()
 class Fan
 {
  public:
-  Fan(int pin);
+  Fan(int pin, unsigned minimum_duty_cycle);
   void setSpeed (unsigned percent);
   unsigned getSpeed ();
 
@@ -270,13 +267,16 @@ class Fan
   int pin;
   unsigned spinup;
   unsigned trail_on;
+  unsigned minimum_speed;
 };
 
-Fan::Fan (int pin_number)
+Fan::Fan (int pin_number, unsigned minimum_duty_cycle)
 {
   pin = pin_number;
+  minimum_speed = FULL_SPEED * minimum_duty_cycle / 100;
   spinup = trail_on = 0;
-  setSpeed(0);
+  setPortBitDirection(PORTB, pin, OUTPUT);
+  setFANspeed(pin, STOP);
 }
 
 void
@@ -308,7 +308,7 @@ Fan::setSpeed (unsigned percent)
 	      speed = FULL_SPEED;
 	    }
 	  else
-	    speed = MINIMUM_SPEED + (percent * (FULL_SPEED - MINIMUM_SPEED) / 100);
+	    speed = minimum_speed + (percent * (FULL_SPEED - minimum_speed) / 100);
 	  setFANspeed(pin, speed);
 	}
     }
@@ -324,8 +324,8 @@ static void
 loop ()
 {
   unsigned old_temp = readAnalogPin(NTC_ADC);
-  Fan fan1(FAN1_PIN);
-  Fan fan2(FAN2_PIN);
+  Fan fan1(FAN1_PIN, FAN1_MIN_DC);
+  Fan fan2(FAN2_PIN, FAN2_MIN_DC);
 
   for (;;)
     {
