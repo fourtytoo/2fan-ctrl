@@ -54,6 +54,12 @@ Boston, MA 02111-1307, USA.*/
 # define MIN_TEMP 300
 #endif
 
+// Fans take turns at which one starts first.
+// This helps evenly spread wear on both fans.
+#ifndef SWAP_FANS
+# define SWAP_FANS 1
+#endif
+
 // A cumulative moving average is applied to the temperature readings,
 // thus damping the value and causing less variations to the fans
 // speed.  The bigger the window, the smoother (and slower) the
@@ -75,9 +81,9 @@ Boston, MA 02111-1307, USA.*/
 # define FAN2_MIN_DC 70		// 70% minimum duty cycle
 #endif
 
-
 // end of tuning knobs
 //////////////////////////////////////////////////////////////////////
+
 
 
 // You may want to change the following only if you change the
@@ -86,6 +92,7 @@ Boston, MA 02111-1307, USA.*/
 // pins on port B
 #define FAN1_PIN PB0		// pin 5
 #define FAN2_PIN PB1		// pin 6
+
 #define NTC_PIN PB2		// pin 7
 #define POT1_PIN PB3		// pin 2
 #define POT2_PIN PB4		// pin 3
@@ -112,20 +119,25 @@ Boston, MA 02111-1307, USA.*/
 
 
 static void
-delay_ms (int time)
+delay_ms (unsigned time)
 {
   for (; time > 0; --time)
     _delay_ms(1);
 }
 
-static void
-delay_s (int time)
+inline static void
+delay_100ms (unsigned time)
 {
   for (; time > 0; --time)
-    _delay_ms(1000);
+    _delay_ms(100);
 }
 
-
+static void
+delay_s (unsigned time)
+{
+  for (; time > 0; --time)
+    delay_100ms(10);
+}
 
 static void
 setFANspeed (int fan, unsigned speed)
@@ -324,8 +336,12 @@ static void
 loop ()
 {
   unsigned old_temp = readAnalogPin(NTC_ADC);
-  Fan fan1(FAN1_PIN, FAN1_MIN_DC);
-  Fan fan2(FAN2_PIN, FAN2_MIN_DC);
+  Fan f1(FAN1_PIN, FAN1_MIN_DC);
+  Fan f2(FAN2_PIN, FAN2_MIN_DC);
+  Fan *fan1 = &f1, *fan2 = &f2;
+#if SWAP_FANS == 1
+  bool must_swap = false;
+#endif // SWAP_FANS
 
   for (;;)
     {
@@ -354,9 +370,19 @@ loop ()
 	}
       else
 	fan2_speed = 0;
-      fan1.setSpeed(fan1_speed);
-      fan2.setSpeed(fan2_speed);
-
+      fan1->setSpeed(fan1_speed);
+      fan2->setSpeed(fan2_speed);
+#if SWAP_FANS == 1
+      if (!must_swap && fan1_speed > 0)
+	must_swap = true;
+      if (must_swap && fan1->getSpeed() == 0 && fan2->getSpeed() == 0)
+	{
+	  Fan *t = fan1;
+	  fan1 = fan2;
+	  fan2 = t;
+	  must_swap = false;
+	}
+#endif // SWAP_FANS
       delay_ms(GRANULARITY);
     }
 }
