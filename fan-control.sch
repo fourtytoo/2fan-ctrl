@@ -1,0 +1,474 @@
+EESchema Schematic File Version 2  date Tue 22 May 08:52:36 2012
+LIBS:power
+LIBS:varistor
+LIBS:optocoupler
+LIBS:avr32
+LIBS:avr-1
+LIBS:avr
+LIBS:device
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:contrib
+LIBS:valves
+LIBS:atmel
+LIBS:atmel-2005
+LIBS:fan-control-cache
+EELAYER 24  0
+EELAYER END
+$Descr A4 11700 8267
+Sheet 1 1
+Title "Fan Control"
+Date "22 may 2012"
+Rev "1.0"
+Comp "Walter C. Pelissero <walter@pelissero.de>"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	5150 1300 5150 1500
+Wire Wire Line
+	5550 5000 5550 5250
+Connection ~ 5400 4100
+Connection ~ 5400 4200
+Wire Wire Line
+	5400 4100 5400 4200
+Wire Wire Line
+	7950 4200 7950 4100
+Wire Wire Line
+	6550 2850 7800 2850
+Wire Wire Line
+	7950 2200 7950 2000
+Wire Wire Line
+	7950 1350 7950 1500
+Wire Wire Line
+	7800 1750 7200 1750
+Wire Wire Line
+	7950 2450 7950 2600
+Wire Wire Line
+	6450 5350 6450 5200
+Wire Wire Line
+	7950 3300 7950 3100
+Wire Wire Line
+	4100 4600 4700 4600
+Wire Wire Line
+	5850 4800 6750 4800
+Wire Wire Line
+	6750 4800 6750 3150
+Wire Wire Line
+	5550 4600 5300 4600
+Wire Wire Line
+	4300 4200 4300 4500
+Connection ~ 3200 3150
+Wire Wire Line
+	3200 3350 3200 2650
+Connection ~ 4050 3150
+Wire Wire Line
+	5150 3150 3200 3150
+Wire Wire Line
+	3200 2650 3000 2650
+Connection ~ 4650 3150
+Wire Wire Line
+	4050 3150 4050 3050
+Wire Wire Line
+	6750 3150 6550 3150
+Wire Wire Line
+	5150 3050 5000 3050
+Wire Wire Line
+	4450 2750 5000 2750
+Connection ~ 4650 2750
+Wire Wire Line
+	3000 2750 3650 2750
+Wire Wire Line
+	3500 2450 3500 2750
+Wire Wire Line
+	4300 4200 5400 4200
+Wire Wire Line
+	4650 2450 4650 2750
+Wire Wire Line
+	4300 4500 4100 4500
+Wire Wire Line
+	6450 5850 6450 6000
+Wire Notes Line
+	7000 6150 7000 3800
+Wire Notes Line
+	7000 6150 3250 6150
+Wire Notes Line
+	3250 6150 3250 3800
+Wire Notes Line
+	3250 3800 7000 3800
+Wire Wire Line
+	5000 2750 5000 3050
+Wire Wire Line
+	7200 1750 7200 2750
+Wire Wire Line
+	7200 2750 6550 2750
+Wire Wire Line
+	6550 2950 7250 2950
+Wire Wire Line
+	7950 3600 7950 3550
+Wire Wire Line
+	7950 4150 7250 4150
+Connection ~ 7950 4150
+Wire Wire Line
+	7250 4150 7250 2950
+Wire Wire Line
+	6150 2200 6150 2450
+Connection ~ 4600 4200
+Connection ~ 6100 4800
+Connection ~ 4600 4600
+Connection ~ 5400 4600
+Connection ~ 5400 4600
+Connection ~ 3500 3150
+Connection ~ 6450 4800
+Wire Wire Line
+	7950 4850 7950 4700
+Wire Wire Line
+	6100 5450 6100 5300
+Connection ~ 5150 2200
+Wire Wire Line
+	5150 2750 5150 2000
+$Comp
+L R R5
+U 1 1 4FB66F87
+P 5150 1750
+F 0 "R5" V 5230 1750 50  0000 C CNN
+F 1 "10K" V 5150 1750 50  0000 C CNN
+	1    5150 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR4
+U 1 1 4FB66F62
+P 5150 1300
+F 0 "#PWR4" H 5150 1390 20  0001 C CNN
+F 1 "+5V" H 5150 1390 30  0000 C CNN
+	1    5150 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR8
+U 1 1 4FB14402
+P 6150 2450
+F 0 "#PWR8" H 6150 2450 30  0001 C CNN
+F 1 "GND" H 6150 2380 30  0001 C CNN
+	1    6150 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L SPST SW1
+U 1 1 4FB143D2
+P 5650 2200
+F 0 "SW1" H 5650 2300 70  0000 C CNN
+F 1 "SPST" H 5650 2100 70  0000 C CNN
+	1    5650 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L POT RV2
+U 1 1 4FACD9DA
+P 7950 1750
+F 0 "RV2" H 7950 1650 50  0000 C CNN
+F 1 "10K" H 7950 1750 50  0000 C CNN
+	1    7950 1750
+	0    -1   1    0   
+$EndComp
+$Comp
+L GND #PWR11
+U 1 1 4FACD9D9
+P 7950 2200
+F 0 "#PWR11" H 7950 2200 30  0001 C CNN
+F 1 "GND" H 7950 2130 30  0001 C CNN
+	1    7950 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR10
+U 1 1 4FACD9D7
+P 7950 1350
+F 0 "#PWR10" H 7950 1440 20  0001 C CNN
+F 1 "+5V" H 7950 1440 30  0000 C CNN
+	1    7950 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR7
+U 1 1 4F7D7260
+P 6100 5450
+F 0 "#PWR7" H 6100 5450 30  0001 C CNN
+F 1 "GND" H 6100 5380 30  0001 C CNN
+	1    6100 5450
+	-1   0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR12
+U 1 1 4F7D6EBC
+P 7950 2450
+F 0 "#PWR12" H 7950 2540 20  0001 C CNN
+F 1 "+5V" H 7950 2540 30  0000 C CNN
+	1    7950 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR14
+U 1 1 4F7D6EB6
+P 7950 3550
+F 0 "#PWR14" H 7950 3640 20  0001 C CNN
+F 1 "+5V" H 7950 3640 30  0000 C CNN
+	1    7950 3550
+	1    0    0    -1  
+$EndComp
+Text Notes 3400 5900 0    60   ~ 0
+duplicated on IC pin 6 (PB1)\nfor second fan
+$Comp
+L GND #PWR9
+U 1 1 4F7D6C1C
+P 6450 6000
+F 0 "#PWR9" H 6450 6000 30  0001 C CNN
+F 1 "GND" H 6450 5930 30  0001 C CNN
+	1    6450 6000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L R R4
+U 1 1 4F79DAA0
+P 6450 5600
+F 0 "R4" V 6530 5600 50  0000 C CNN
+F 1 "150" V 6450 5600 50  0000 C CNN
+	1    6450 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED D3
+U 1 1 4F79DA81
+P 6450 5000
+F 0 "D3" H 6450 5100 50  0000 C CNN
+F 1 "LED" H 6450 4900 50  0000 C CNN
+	1    6450 5000
+	0    1    1    0   
+$EndComp
+Text Label 3550 4450 2    60   ~ 0
+tacho
+Text Label 3550 4550 2    60   ~ 0
++12V
+Text Label 3550 4650 2    60   ~ 0
+GND
+$Comp
+L +5V #PWR3
+U 1 1 4F79C1C5
+P 4650 2450
+F 0 "#PWR3" H 4650 2540 20  0001 C CNN
+F 1 "+5V" H 4650 2540 30  0000 C CNN
+	1    4650 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L INDUCTOR L1
+U 1 1 4F79BF39
+P 5000 4600
+F 0 "L1" V 4950 4600 40  0000 C CNN
+F 1 "ferrite bead" V 5100 4600 40  0000 C CNN
+	1    5000 4600
+	0    -1   1    0   
+$EndComp
+$Comp
+L C C4
+U 1 1 4F79980F
+P 3500 2950
+F 0 "C4" H 3550 3050 50  0000 L CNN
+F 1 "10 uF" H 3550 2850 50  0000 L CNN
+	1    3500 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR15
+U 1 1 4F7992DB
+P 7950 4850
+F 0 "#PWR15" H 7950 4850 30  0001 C CNN
+F 1 "GND" H 7950 4780 30  0001 C CNN
+	1    7950 4850
+	1    0    0    -1  
+$EndComp
+Text Label 2450 2700 2    60   ~ 0
+GND
+Text Label 2450 2800 2    60   ~ 0
++12V
+Text Label 2450 2900 2    60   ~ 0
+tacho
+$Comp
+L CONN_3 K2
+U 1 1 4F799122
+P 3750 4500
+F 0 "K2" V 3700 4500 50  0000 C CNN
+F 1 "CONN_3" V 3800 4500 40  0000 C CNN
+	1    3750 4500
+	-1   0    0    1   
+$EndComp
+$Comp
+L +12V #PWR2
+U 1 1 4F798FDD
+P 3500 2450
+F 0 "#PWR2" H 3500 2400 20  0001 C CNN
+F 1 "+12V" H 3500 2550 30  0000 C CNN
+	1    3500 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR6
+U 1 1 4F798FC9
+P 5550 5250
+F 0 "#PWR6" H 5550 5250 30  0001 C CNN
+F 1 "GND" H 5550 5180 30  0001 C CNN
+	1    5550 5250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L CONN_3 K1
+U 1 1 4F798F56
+P 2650 2750
+F 0 "K1" V 2600 2750 50  0000 C CNN
+F 1 "CONN_3" V 2700 2750 40  0000 C CNN
+	1    2650 2750
+	-1   0    0    -1  
+$EndComp
+$Comp
+L 7805 U1
+U 1 1 4F798F11
+P 4050 2800
+F 0 "U1" H 4200 2604 60  0000 C CNN
+F 1 "7805" H 4050 3000 60  0000 C CNN
+	1    4050 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L +12V #PWR5
+U 1 1 4F798DD1
+P 5400 4100
+F 0 "#PWR5" H 5400 4050 20  0001 C CNN
+F 1 "+12V" H 5400 4200 30  0000 C CNN
+	1    5400 4100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L GND #PWR13
+U 1 1 4F798B25
+P 7950 3300
+F 0 "#PWR13" H 7950 3300 30  0001 C CNN
+F 1 "GND" H 7950 3230 30  0001 C CNN
+	1    7950 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR1
+U 1 1 4F798AE2
+P 3200 3350
+F 0 "#PWR1" H 3200 3350 30  0001 C CNN
+F 1 "GND" H 3200 3280 30  0001 C CNN
+	1    3200 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C1
+U 1 1 4F79862E
+P 4650 2950
+F 0 "C1" H 4700 3050 50  0000 L CNN
+F 1 "1 uF" H 4700 2850 50  0000 L CNN
+	1    4650 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 4F797FB2
+P 6100 5050
+F 0 "R1" V 6180 5050 50  0000 C CNN
+F 1 "10K" V 6100 5050 50  0000 C CNN
+	1    6100 5050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 4F797F26
+P 7950 4450
+F 0 "R3" V 8030 4450 50  0000 C CNN
+F 1 "4.7K" V 7950 4450 50  0000 C CNN
+	1    7950 4450
+	-1   0    0    1   
+$EndComp
+$Comp
+L VR VR1
+U 1 1 4F797819
+P 7950 3850
+F 0 "VR1" V 8030 3850 50  0000 C CNN
+F 1 "10K" V 7950 3850 50  0000 C CNN
+	1    7950 3850
+	-1   0    0    1   
+$EndComp
+$Comp
+L POT RV1
+U 1 1 4F7977D2
+P 7950 2850
+F 0 "RV1" H 7950 2750 50  0000 C CNN
+F 1 "10K" H 7950 2850 50  0000 C CNN
+	1    7950 2850
+	0    -1   1    0   
+$EndComp
+$Comp
+L DIODE D1
+U 1 1 4F7977C5
+P 5400 4400
+F 0 "D1" H 5400 4500 40  0000 C CNN
+F 1 "1N4001" H 5400 4300 40  0000 C CNN
+	1    5400 4400
+	0    1    -1   0   
+$EndComp
+$Comp
+L C C2
+U 1 1 4F79773F
+P 4600 4400
+F 0 "C2" H 4650 4500 50  0000 L CNN
+F 1 "100n" H 4650 4300 50  0000 L CNN
+	1    4600 4400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L MOSFET_N Q1
+U 1 1 4F797725
+P 5650 4800
+F 0 "Q1" H 5600 4650 60  0000 R CNN
+F 1 "IRLZ34N" H 5600 4950 60  0000 R CNN
+	1    5650 4800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AT90LS2343P IC1
+U 1 1 4F797714
+P 5850 2950
+F 0 "IC1" H 5350 3280 50  0000 L BNN
+F 1 "ATtiny45" H 5350 2550 50  0000 L BNN
+F 2 "avr-1-DIL08" H 5850 3100 50  0001 C CNN
+	1    5850 2950
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
