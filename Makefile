@@ -18,51 +18,66 @@
 # the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-RM = rm -f
 # The CPU
 MCU = attiny45
-# adjust this to the CPU frequency
+
+# Adjust this to the CPU frequency.  The internal clock of the
+# ATtiny45 runs from an internal 8MHz scillator, which is devided by 8
+# if fuse bit CKDIV8 is set to 0 (which is what is done below with
+# lfuse=0x62).  So the actual speed of the CPU is 1MHz.
 F_CPU = 1000000
-CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU) -gstabs
+
+# -Os for size optimisation
+CFLAGS = -Wall -mmcu=$(MCU) -Os -DF_CPU=$(F_CPU)UL -gstabs
 LDFLAGS = 
 LDLIBS =
 CC = avr-gcc -std=gnu99
 CXX = avr-c++
 OBJCOPY = avr-objcopy
+# You can add flags  -F -V to rescue a badly mangled chip.  See avrdude(1).
 AVRDUDE = avrdude
-# use the parallel port programmer
-PROGRAMMER = stk200
+# for the parallel port programmer
+#PROGRAMMER = stk200
 AVRDUDE_PORT = /dev/ppi0
+# for the USBasp programmer
+PROGRAMMER = usbasp
+AVRDUDE_PORT != usbconfig | awk -F : '/USBasp/ { print $$1 }'
 SIZE = avr-size
+RM = rm -f
 
+# see  http://www.engbedded.com/fusecalc/
+FUSES = -U lfuse:w:0x62:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 
 default: all
 
 all: fans.hex
 
-fans.bin: fans.o
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ fans.o $(LDLIBS)
+# fans.bin: fans.o
+# 	$(CXX) $(LDFLAGS) -o $@ fans.o $(LDLIBS)
 
 clean:
 	$(RM) *.o *.bin *.hex
 
 dist: clean
 
+fuses:
+	$(AVRDUDE) -p $(MCU) -P $(AVRDUDE_PORT) -c $(PROGRAMMER) $(FUSES)
+
 upload: fans.hex
-	$(AVRDUDE) -F -V -p $(MCU) -P $(AVRDUDE_PORT) -c $(PROGRAMMER) -b 19200 -U lfuse:w:0x62:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:fans.hex 
+	$(AVRDUDE) -p $(MCU) -P $(AVRDUDE_PORT) -c $(PROGRAMMER) -U flash:w:fans.hex 
 
 ######################################################################
 
 .SUFFIXES: .bin .hex
 
 .o.bin:
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
+	$(CXX) $(LDFLAGS) -o $@ $< $(LDLIBS)
 
 .c.o:
 	$(CXX) $(CFLAGS) -c $<
 
-.c.bin:
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
+#.c.bin:
+#	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
 
 .bin.hex:
 	$(OBJCOPY) -R .eeprom -O ihex $< $@
