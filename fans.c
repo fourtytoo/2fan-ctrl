@@ -2,7 +2,7 @@
 
 /*  main.c --- main program
 
- Copyright (C) 2012 by Walter C. Pelissero
+ Copyright (C) 2012-2014 by Walter C. Pelissero
 
  Author: Walter C. Pelissero <walter@pelissero.de>
  Project: PC fan control
@@ -49,7 +49,7 @@ Boston, MA 02111-1307, USA.*/
 //  actually a voltage measured on NTC_PIN.  The value is between 0
 //  and 1023, the latter being Vcc.  So, if Vcc is around 5V, here 300
 //  means something about 1.46V.  This is what you would read at about
-//  22-25 degrees centigrade.
+//  22-25 degrees Celsius.
 #ifndef MIN_TEMP
 # define MIN_TEMP 300
 #endif
