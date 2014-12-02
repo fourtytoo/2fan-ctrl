@@ -1,0 +1,7 @@
+*.bin
+*.core
+*.hex
+*.o
+*.png
+_darcs
+doc
