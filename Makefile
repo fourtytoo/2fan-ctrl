@@ -50,7 +50,7 @@ FUSES = -U lfuse:w:0x62:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 
 default: all
 
-all: fans.hex
+all: sketch.hex
 
 clean:
 	$(RM) *.o *.bin *.hex
@@ -60,8 +60,8 @@ dist: clean
 fuses:
 	$(AVRDUDE) -p $(MCU) -P $(AVRDUDE_PORT) -c $(PROGRAMMER) $(FUSES)
 
-upload: fans.hex
-	$(AVRDUDE) -p $(MCU) -P $(AVRDUDE_PORT) -c $(PROGRAMMER) -U flash:w:fans.hex 
+upload: sketch.hex
+	$(AVRDUDE) -p $(MCU) -P $(AVRDUDE_PORT) -c $(PROGRAMMER) -U flash:w:sketch.hex 
 
 ######################################################################
 
@@ -72,9 +72,6 @@ upload: fans.hex
 
 .c.o:
 	$(CXX) $(CFLAGS) -c $<
-
-#.c.bin:
-#	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
 
 .bin.hex:
 	$(OBJCOPY) -R .eeprom -O ihex $< $@
