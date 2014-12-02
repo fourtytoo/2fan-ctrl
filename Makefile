@@ -28,11 +28,11 @@ MCU = attiny45
 F_CPU = 1000000
 
 # -Os for size optimisation
-CFLAGS = -Wall -mmcu=$(MCU) -Os -DF_CPU=$(F_CPU)UL -gstabs
+CFLAGS = -Wall -Os -DF_CPU=$(F_CPU)UL
 LDFLAGS = 
 LDLIBS =
-CC = avr-gcc -std=gnu99
-CXX = avr-c++
+CC = avr-gcc -std=gnu99 -mmcu=$(MCU)
+CXX = avr-c++ -mmcu=$(MCU)
 OBJCOPY = avr-objcopy
 # You can add flags  -F -V to rescue a badly mangled chip.  See avrdude(1).
 AVRDUDE = avrdude
@@ -51,9 +51,6 @@ FUSES = -U lfuse:w:0x62:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 default: all
 
 all: fans.hex
-
-# fans.bin: fans.o
-# 	$(CXX) $(LDFLAGS) -o $@ fans.o $(LDLIBS)
 
 clean:
 	$(RM) *.o *.bin *.hex
