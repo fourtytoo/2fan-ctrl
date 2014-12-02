@@ -280,12 +280,13 @@ init ()
 
 class Fan
 {
- public:
+public:
   Fan(int pin, unsigned minimum_duty_cycle);
-  void setSpeed (unsigned percent);
+  void setSpeed (unsigned speed);
   unsigned getSpeed ();
+  void updateSpeed (unsigned percent);
 
- private:
+private:
   int pin;
   unsigned spinup;
   unsigned trail_on;
@@ -300,7 +301,13 @@ Fan::Fan (int pin_number, unsigned minimum_duty_cycle)
 }
 
 void
-Fan::setSpeed (unsigned percent)
+Fan::setSpeed (unsigned speed)
+{
+  setFANspeed(pin, speed);
+}
+
+void
+Fan::updateSpeed (unsigned percent)
 {
   if (spinup)
     --spinup;
@@ -315,7 +322,7 @@ Fan::setSpeed (unsigned percent)
 	  if (trail_on)
 	    --trail_on;
 	  else
-	    setFANspeed(pin, STOP);
+	    setSpeed(STOP);
 	}
       else
 	{
@@ -329,7 +336,7 @@ Fan::setSpeed (unsigned percent)
 	    }
 	  else
 	    speed = minimum_speed + (percent * (FULL_SPEED - minimum_speed) / 100);
-	  setFANspeed(pin, speed);
+	  setSpeed(speed);
 	}
     }
 }
@@ -378,8 +385,8 @@ loop ()
 	}
       else
 	fan2_speed = 0;
-      fan1->setSpeed(fan1_speed);
-      fan2->setSpeed(fan2_speed);
+      fan1->updateSpeed(fan1_speed);
+      fan2->updateSpeed(fan2_speed);
 #if SWAP_FANS == 1
       if (!must_swap && fan1_speed > 0)
 	must_swap = true;
