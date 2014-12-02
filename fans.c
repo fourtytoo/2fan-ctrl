@@ -231,6 +231,12 @@ readPot (int adc)
   return readAnalogPinLR(adc);
 }
 
+static unsigned
+readNTC ()
+{
+  return readAnalogPin(NTC_ADC);
+}
+
 static void
 init_PWM ()
 {  
@@ -337,7 +343,7 @@ Fan::getSpeed ()
 static void
 loop ()
 {
-  unsigned old_temp = readAnalogPin(NTC_ADC);
+  unsigned old_temp = readNTC();
   Fan f1(FAN1_PIN, FAN1_MIN_DC);
   Fan f2(FAN2_PIN, FAN2_MIN_DC);
   Fan *fan1 = &f1, *fan2 = &f2;
@@ -347,7 +353,7 @@ loop ()
 
   for (;;)
     {
-      unsigned temp = readAnalogPin(NTC_ADC);
+      unsigned temp = readNTC();
       unsigned min = readPot(POT1_ADC);
       unsigned range = readPot(POT2_ADC);
       unsigned fan1_speed, fan2_speed;
