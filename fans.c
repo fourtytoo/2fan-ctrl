@@ -262,7 +262,11 @@ init ()
   // enable a2d conversions
   setRegisterBit(ADCSRA, ADEN, 1);
 
+  setPortBitDirection(PORTB, FAN1_PIN, OUTPUT);
+  setPortBitDirection(PORTB, FAN2_PIN, OUTPUT);
   init_PWM();
+  setFANspeed(FAN1_PIN, STOP);
+  setFANspeed(FAN2_PIN, STOP);
   setPortBitDirection(PORTB, NTC_PIN, INPUT);
   setPortBitDirection(PORTB, POT1_PIN, INPUT);
   setPortBitDirection(PORTB, POT2_PIN, INPUT);
@@ -287,8 +291,6 @@ Fan::Fan (int pin_number, unsigned minimum_duty_cycle)
   pin = pin_number;
   minimum_speed = FULL_SPEED * minimum_duty_cycle / 100;
   spinup = trail_on = 0;
-  setPortBitDirection(PORTB, pin, OUTPUT);
-  setFANspeed(pin, STOP);
 }
 
 void
