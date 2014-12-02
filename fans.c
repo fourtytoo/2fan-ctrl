@@ -372,7 +372,7 @@ loop ()
       old_temp = temp;
       // Reduce the temperature offset, because we are not interested
       // in temperatures below MIN_TEMP.
-      temp -= MIN_TEMP;
+      temp = (temp > MIN_TEMP) ? (temp - MIN_TEMP) : 0;
       // Scale down min and range pot values because we don't need so
       // much value range.
       min >>= 1;
