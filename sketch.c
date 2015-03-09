@@ -46,9 +46,8 @@
 
 //  You don't want to start the fans below this temperature.  This is
 //  actually a voltage measured on NTC_PIN.  The value is between 0
-//  and 1023, the latter being Vcc.  So, if Vcc is around 5V, here 300
-//  means something about 1.46V.  This is what you would read at about
-//  22-25 degrees Celsius.
+//  and 1023, the latter being Vcc.  You should experiment to see what
+//  your NTC delivers at the temperatures you are interested to.
 #ifndef MIN_TEMP
 # define MIN_TEMP 300
 #endif

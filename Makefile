@@ -27,8 +27,11 @@ MCU = attiny45
 # lfuse=0x62).  So the actual speed of the CPU is 1MHz.
 F_CPU = 1000000
 
+# minimum temperature (see sketch.c)
+MIN_TEMP = 315
+
 # -Os for size optimisation
-CFLAGS = -Wall -Os -DF_CPU=$(F_CPU)UL
+CFLAGS = -Wall -Os -DF_CPU=$(F_CPU)UL -DMIN_TEMP=$(MIN_TEMP)
 LDFLAGS = 
 LDLIBS =
 CC = avr-gcc -std=gnu99 -mmcu=$(MCU)
