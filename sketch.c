@@ -374,8 +374,8 @@ loop ()
       temp = (temp > MIN_TEMP) ? (temp - MIN_TEMP) : 0;
       // Scale down min and range pot values because we don't need so
       // much value range.
-      min >>= 1;
-      range >>= 1;
+      min >>= 2;
+      range >>= 2;
       fan1_speed = (temp > min ? ((temp - min) * 100 / range) : 0);
       if (fan1_speed > 100)
 	{
